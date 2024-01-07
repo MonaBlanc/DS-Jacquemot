@@ -1,0 +1,50 @@
+<!-- restaurant-list.component.html -->
+<div class="container">
+    <h2>Restaurant List</h2>
+  
+    <!-- Restaurant Form -->
+    <div class="form-container">
+      <form #restaurantForm="ngForm" (ngSubmit)="addRestaurant()">
+        <div class="form-group">
+          <label for="nom">Nom:</label>
+          <input type="text" id="nom" name="nom" [(ngModel)]="newRestaurant.nom" required />
+        </div>
+        <div class="form-group">
+          <label for="adresse">Adresse:</label>
+          <input type="text" id="adresse" name="adresse" [(ngModel)]="newRestaurant.adresse" required />
+        </div>
+        <div class="form-group">
+            <label for="tags">Tags:</label>
+            <select id="tags" name="tags" [(ngModel)]="newRestaurant.tags" multiple>
+              <option *ngFor="let tag of tagOptions" [value]="tag">{{ tag }}</option>
+            </select>
+        </div>
+        <div class="form-group">
+          <label for="photoRestaurant">Photo:</label>
+          <input type="file" id="photoRestaurant" name="photoRestaurant" [(ngModel)]="newRestaurant.photoRestaurant" (change)="onFileSelected($event)"/>
+        </div>
+        <button type="submit">Ajouter Restaurant</button>
+      </form>
+    </div>
+  
+    <!-- Restaurant Table -->
+    <table class="restaurant-table">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Adresse</th>
+          <th>Moyenne</th>
+          <th>Détails</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let restaurant of restaurants" [setColor]="restaurant.moyenne">
+          <td>{{ restaurant.nom }}</td>
+          <td>{{ restaurant.adresse }}</td>
+          <td>{{ restaurant.moyenne !== undefined ? restaurant.moyenne : '/' }}</td>
+          <td><button (click)="goToRestaurantDetails(restaurant.id)">Détails</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
