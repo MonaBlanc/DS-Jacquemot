@@ -1,0 +1,50 @@
+<div *ngIf="restaurant">
+  <img *ngIf="restaurant.photoRestaurant" [src]="restaurant.photoRestaurant" alt="Restaurant Image">  
+  <h2>{{ restaurant.nom }} Details</h2>
+
+  <div>
+    <p><strong>Address:</strong> {{ restaurant.adresse }}</p>
+    <img *ngIf="restaurant.photoRestaurant" [src]="restaurant.photoRestaurant" alt="Restaurant Image">
+
+    <h3>Evaluations</h3>
+    <ul>
+      <li *ngFor="let evaluation of restaurant.evaluations">
+        <p><strong>Auteur:</strong> {{ evaluation.auteur }}</p>
+        <p><strong>Note:</strong> {{ evaluation.note }}</p>
+        <p><strong>Commentaire:</strong> {{ evaluation.commentaire }}</p>
+        <p><strong>Photos:</strong></p>
+        <ul>
+          <li *ngFor="let photo of evaluation.photos">
+            <img [src]="photo" alt="Evaluation Photo">
+          </li>
+        </ul>
+        <button (click)="deleteEvaluation(evaluation.id)">Delete Evaluation</button>
+      </li>
+    </ul>
+
+    <h3>Add Evaluation</h3>
+    <form (ngSubmit)="addEvaluation()">
+      <div>
+        <label for="auteur">Auteur:</label>
+        <input type="text" id="auteur" name="auteur" [(ngModel)]="newEvaluation.auteur" required />
+      </div>
+      <div>
+        <label for="note">Note:</label>
+        <input type="number" id="note" name="note" [(ngModel)]="newEvaluation.note" required />
+      </div>
+      <div>
+        <label for="commentaire">Commentaire:</label>
+        <input type="text" id="commentaire" name="commentaire" [(ngModel)]="newEvaluation.commentaire" required />
+      </div>
+      <div>
+        <label for="photos">Photos:</label>
+        <select id="photos" name="photos" [(ngModel)]="newEvaluation.photos" multiple>
+          <option *ngFor="let photo of photoOptions" [value]="photo">{{ photo }}</option>
+        </select>
+      </div>
+      <button type="submit">Add Evaluation</button>
+    </form>
+
+    <button (click)="goBack()">Back</button>
+  </div>
+</div>
